@@ -1,41 +1,38 @@
 {
-    "parser": "babel-eslint",
-    "extends": ["airbnb", "prettier", "prettier/react"],
-    "plugins": ["prettier"],
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "env": {
-        "browser": true,
-        "node": true,
-        "mocha": true,
-        "es6": true,
-        "jest": true
-    },
-    "rules": {
-        "indent": ["error", 4],
-        "space-before-function-paren": "off",
-        "react/prefer-stateless-function": "warn",
-        "react/jsx-one-expression-per-line": "off",
-        "import/no-extraneous-dependencies": [
-            "error",
-            { "devDependencies": true }
-        ],
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "linebreak-style": "off",
-        "global-require": "off",
-        "semi": "warn",
-        "arrow-body-style": "off",
-        "no-multiple-empty-lines": ["warn", { "max": 1 }],
-        "no-unused-expressions": [
-            "error",
-            {
-                "allowTaggedTemplates": true
-            }
-        ],
-        "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] }]
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "plugins": ["react", "graphql"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "16.8.6"
+    }
+  },
+  "rules": {
+    "no-console": "warn",
+    "react/prop-types": "warn",
+    "react/display-name": "off",
+    "prettier/prettier": "warn",
+    "graphql/template-strings": ["error", { "env": "literal" }]
+  },
+  "overrides": [
+    {
+      "files": ["*.graphql", "*.gql"]
+    }
+  ]
 }
