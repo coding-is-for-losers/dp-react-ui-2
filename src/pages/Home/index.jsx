@@ -2,11 +2,7 @@ import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Hero, Stepper, RecipeDetail, CTA } from "ui-lib";
 import Page from "layouts/Page";
-import HeroData from "DummyData/hero";
-import StepperData from "DummyData/stepper";
-import recipeDetailData from "DummyData/recipeDetail";
-import ctaData from "DummyData/cta";
-import {hero} from './copy';
+import { hero, stepper, recipeDetail, cta } from "./copy";
 
 const useStyles = makeStyles(() => ({
   stepperContainer: {
@@ -21,11 +17,11 @@ const Home = () => {
     <Fragment>
       <Hero {...hero} />
       <div className={classes.stepperContainer}>
-        <Stepper {...StepperData} />
+        <Stepper {...stepper} />
       </div>
-      <RecipeDetail {...recipeDetailData} />
-      <RecipeDetail {...recipeDetailData} />
-      <CTA {...ctaData} />
+      <RecipeDetail {...recipeDetail} />
+      <RecipeDetail {...recipeDetail} />
+      <CTA {...cta} />
     </Fragment>
   );
 };

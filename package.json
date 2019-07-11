@@ -31,7 +31,6 @@
     "date-fns": "^1.30.1",
     "dotenv": "8.0.0",
     "dotenv-expand": "5.1.0",
-    "eslint": "4.10.0",
     "eslint-loader": "^2.2.0",
     "eslint-plugin-graphql": "^3.0.3",
     "eslint-plugin-import": "2.18.0",
@@ -41,6 +40,7 @@
     "file-loader": "4.0.0",
     "fs-extra": "8.1.0",
     "get-graphql-schema": "^2.1.2",
+    "global": "^4.4.0",
     "graphql": "^14.4.2",
     "graphql-cli": "^3.0.11",
     "graphql-config": "^2.2.1",
@@ -106,7 +106,6 @@
   },
   "optionalDependencies": {
     "babel-eslint": "^10.0.2",
-    "eslint": "^6.0.1",
     "prettier": "^1.18.2"
   },
   "jest": {
@@ -152,6 +151,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "eslint": "5.16",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-recommended": "^4.0.0",
     "eslint-plugin-prettier": "^3.1.0",
