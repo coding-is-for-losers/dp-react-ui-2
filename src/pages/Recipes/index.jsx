@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import { Hero, RecipeIndex, mainTheme } from "ui-lib";
 
 import Page from "layouts/Page";
-import HeroData from "DummyData/hero";
-import recipeIndexData from "DummyData/recipeIndex";
+import { hero, recipeIndex } from "./copy";
 
 const useStyles = makeStyles(theme => ({
   cardContainer: {
@@ -30,12 +29,12 @@ const RecipeIndexes = () => {
   const classes = useStyles(mainTheme);
   return (
     <Fragment>
-      <Hero {...HeroData} />
+      <Hero {...hero} />
       <div className={classes.cardContainer}>
-        <RecipeIndex {...recipeIndexData} />
-        <RecipeIndex {...recipeIndexData} />
-        <RecipeIndex {...recipeIndexData} />
-        <RecipeIndex {...recipeIndexData} />
+        <RecipeIndex {...recipeIndex} />
+        <RecipeIndex {...recipeIndex} />
+        <RecipeIndex {...recipeIndex} />
+        <RecipeIndex {...recipeIndex} />
       </div>
     </Fragment>
   );

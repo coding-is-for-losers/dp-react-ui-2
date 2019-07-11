@@ -15,7 +15,6 @@ class LoginMiddleware extends React.Component {
   render() {
     const { children, data, location } = this.props;
     /* eslint-disable */
-    console.log("connected some shit ", this.props);
     const user = _.get(data, "userViewer.user", {});
     if (
       (!_.isEmpty(user) && !_.isUndefined(user)) ||

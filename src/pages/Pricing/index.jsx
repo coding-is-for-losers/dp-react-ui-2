@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import { PricingCard, mainTheme } from "ui-lib";
 
 import Page from "layouts/Page";
-import pricingData from "DummyData/pricingCard";
-
+import { pricing } from "./copy";
 const useStyles = makeStyles(theme => ({
   cardContainer: {
     display: "flex",
@@ -21,9 +20,9 @@ const PricingPage = () => {
   return (
     <Fragment>
       <div className={classes.cardContainer}>
-        <PricingCard {...pricingData} />
-        <PricingCard {...pricingData} />
-        <PricingCard {...pricingData} />
+        <PricingCard {...pricing.a} />
+        <PricingCard {...pricing.b} />
+        <PricingCard {...pricing.c} />
       </div>
     </Fragment>
   );
