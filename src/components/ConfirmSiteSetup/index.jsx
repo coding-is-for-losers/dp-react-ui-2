@@ -35,9 +35,9 @@ const ConfirmSiteSetup = ({ data }) => {
         <b>Site Domain: </b>
         {siteDomain}
       </Typography>
-      {sources.map(({ name, selection }) => {
+      {sources.map(({ name, selection }, i) => {
         return (
-          <div>
+          <div key={`${i} source`}>
             <Typography
               component="h6"
               variant="h6"
@@ -65,9 +65,9 @@ const ConfirmSiteSetup = ({ data }) => {
           </div>
         );
       })}
-      {targets.map(({ name, selection }) => {
+      {targets.map(({ name, selection }, i) => {
         return (
-          <div>
+          <div key={`${i} source`}>
             <Typography
               component="h6"
               variant="h6"

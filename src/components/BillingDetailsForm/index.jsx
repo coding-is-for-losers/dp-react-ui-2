@@ -52,7 +52,7 @@ BillingForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   cardInformation: PropTypes.shape({
     cardName: PropTypes.string.isRequired,
-    cardNumbder: PropTypes.string.isRequired,
+    cardNumber: PropTypes.string.isRequired,
     expDate: PropTypes.string.isRequired,
     cvv: PropTypes.number.isRequired
   }).isRequired

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import { Typography, Link } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 const Logo = ({ src }) => {
   const classes = useStyles(Theme);
-  const CollisionLink = React.forwardRef((props, ref) => (
+  const CollisionLink = forwardRef((props, ref) => (
     <RouterLink innerRef={ref} to="/" {...props} />
   ));
   return (

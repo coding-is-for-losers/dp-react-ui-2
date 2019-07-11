@@ -6,6 +6,7 @@ import HeroData from "DummyData/hero";
 import StepperData from "DummyData/stepper";
 import recipeDetailData from "DummyData/recipeDetail";
 import ctaData from "DummyData/cta";
+import {hero} from './copy';
 
 const useStyles = makeStyles(() => ({
   stepperContainer: {
@@ -18,7 +19,7 @@ const Home = () => {
   const classes = useStyles();
   return (
     <Fragment>
-      <Hero {...HeroData} />
+      <Hero {...hero} />
       <div className={classes.stepperContainer}>
         <Stepper {...StepperData} />
       </div>

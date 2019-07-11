@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 function Error({ errorMessage }) {
   const classes = useStyles(mainTheme);
-
+  console.log("the error is ", errorMessage);
   return (
     <Slide direction="up" in mountOnEnter unmountOnExit>
       <Container maxWidth="md" className={classes.container}>

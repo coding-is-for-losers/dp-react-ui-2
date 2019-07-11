@@ -21,9 +21,8 @@ import Account from "./pages/Account";
 import Logout from "./components/Logout";
 import "./constants/styles.scss";
 
-function App(props) {
+function App() {
   const { data, loading, error } = useQuery(HealthQuery);
-  console.log("main props in app ", props);
   let inner = (
     <Switch>
       <Route exact path="/" component={Home} />
