@@ -79,11 +79,11 @@ export const recipeDetail = {
     { link: "/sites/setup", auth: false, name: "Get Started" },
     { link: "/sites/setup", auth: true, name: "Add Site" }
   ],
-  title: "Recipe Detail Title",
+  name: "Recipe Detail Title",
   video: "http://techslides.com/demos/samples/sample.mp4",
-  description:
+  descriptionLong:
     "Thundercats wolf fashion axe austin brunch raw denim authentic freegan farm-to-table. Meditation yuccie snackwave selfies. Occupy paleo wayfarers try-hard humblebrag viral edison bulb tbh vice.",
-  price: 15
+  pricePerMonth: 15
 };
 
 export const cta = {
