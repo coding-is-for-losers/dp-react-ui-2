@@ -1,8 +1,11 @@
 import React, { Component, Fragment } from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
+import PropTypes from "prop-types";
+import { withApollo } from "react-apollo";
 import { Wizard } from "ui-lib";
 import Page from "layouts/Page";
 import RegisterForm from "components/RegisterForm";
+import { OrgQuery, UserQuery, RegisterUserMutation } from "queries/users.gql";
 
 class Register extends Component {
   constructor(props) {
@@ -18,13 +21,59 @@ class Register extends Component {
     };
   }
 
-  onComplete = e => {
-    const {
-      props: { history }
-    } = this;
-    e.preventDefault();
-    console.log("Values from state! ", this.state);
-    history.push("/recipes");
+  onSubmit = async () => {
+    const { email, firstName, lastName, orgName, password } = this.state;
+    const { client, history } = this.props;
+    this.setState({ loading: true });
+    try {
+      const {
+        error,
+        data: {
+          registerUser: { ok, token }
+        }
+      } = await client.mutate({
+        mutation: RegisterUserMutation,
+        variables: {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          orgName: orgName,
+          password: password
+        }
+      });
+      if (!ok || error) {
+        console.log("the error is ", error);
+        this.setState({
+          loading: false,
+          alert: {
+            type: "createError",
+            message: `There was an error creating your user: ${error}`
+          }
+        });
+      } else {
+        localStorage.setItem("token", token);
+        this.setState(
+          {
+            loading: false,
+            alert: {
+              type: "createSuccess",
+              message: "Successfully created your user. Welcome!"
+            }
+          },
+          () => {
+            history.push("/recipes");
+          }
+        );
+      }
+    } catch (error) {
+      this.setState({
+        loading: false,
+        alert: {
+          type: "createError",
+          message: `There was an error creating registering your user: ${error}`
+        }
+      });
+    }
   };
 
   handleChange = e => {
@@ -42,11 +91,12 @@ class Register extends Component {
     const {
       state: { email, password, firstName, lastName, organization, agreeTOS }
     } = this;
+    console.log(this.props);
     return (
       <Fragment>
         <Wizard
           completeName="Get Started"
-          onComplete={this.onComplete}
+          onComplete={this.onSubmit}
           steps={[
             {
               name: "Register",
@@ -70,7 +120,8 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired
+  history: ReactRouterPropTypes.history.isRequired,
+  client: PropTypes.object.isRequired
 };
 
-export default Page(Register);
+export default Page(withApollo(Register));

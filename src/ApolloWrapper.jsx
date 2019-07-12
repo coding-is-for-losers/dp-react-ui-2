@@ -52,9 +52,7 @@ function ApolloWrapper(App) {
       <StripeProvider apiKey={process.env.STRIPE_API_KEY}>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client}>
-            <ConnectedLoginMiddleware>
-              <App />
-            </ConnectedLoginMiddleware>
+            <App />
           </ApolloHooksProvider>
         </ApolloProvider>
       </StripeProvider>

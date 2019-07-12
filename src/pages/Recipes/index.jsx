@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core";
 import { Hero, RecipeIndex, mainTheme } from "ui-lib";
-
+import { graphql } from "react-apollo";
+import { RecipesQuery } from "queries/recipes.gql";
 import Page from "layouts/Page";
 import { hero, recipeIndex } from "./copy";
 
@@ -46,4 +47,4 @@ const options = {
   authenticated: true
 };
 
-export default Page(RecipeIndexes, options);
+export default Page(graphql(RecipesQuery)(RecipeIndexes), options);

@@ -38,7 +38,6 @@ export default (Component, options) => {
       <Box height={1} className={classes.box}>
         <UserConsumer>
           {user => {
-            console.log("the user in laout is ", user);
             return authenticated && isEmpty(user) ? (
               <Redirect to="/" />
             ) : (

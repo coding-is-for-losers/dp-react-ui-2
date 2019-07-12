@@ -21,6 +21,7 @@ class Login extends Component {
     const {
       props: { history }
     } = this;
+    console.log(this.props);
     e.preventDefault();
     try {
       const {
@@ -38,6 +39,7 @@ class Login extends Component {
       localStorage.removeItem("fromPath");
       history.push("/recipes");
     } catch (err) {
+      console.log("he errors are", err);
       this.setState({
         errors: [err.toString().replace("Error: GraphQL error: ", "")]
       });
