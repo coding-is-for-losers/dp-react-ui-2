@@ -54,12 +54,16 @@ function Register({ history }) {
       } else {
         localStorage.setItem("token", token);
         setLoading(false);
+        history.push("/recipes");
+        /*
+        // Modals aren't working! You can use this flow to get a success view though.
         setAlert({
           alert: {
             type: "createSuccess",
             message: "Successfully created your user. Welcome!"
           }
         });
+        */
       }
     }
   });
@@ -67,12 +71,21 @@ function Register({ history }) {
   const onComplete = async () => {
     setLoading(true);
     await registerUser();
-    history.push("/recipes");
   };
 
-  if (!_.isEmpty(alert)) {
+  if (!_.isEmpty(alert) && alert.type == "Modal's don't work for now!?") {
     // we weren't handling alerts before so this will do for now.
-    return <Modal message={alert.message} handleClose={() => setAlert({})} />;
+    return (
+      <Modal
+        message={alert.message}
+        handleClose={() => {
+          setAlert({});
+          if (alert.type == "createSuccess") {
+            history.push("/recipes");
+          }
+        }}
+      />
+    );
   }
 
   if (loading) {
