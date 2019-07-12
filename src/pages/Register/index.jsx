@@ -1,127 +1,111 @@
-import React, { Component, Fragment } from "react";
-import ReactRouterPropTypes from "react-router-prop-types";
+import React, { useState, useEffect } from "react";
+import _ from "lodash";
 import PropTypes from "prop-types";
-import { withApollo } from "react-apollo";
-import { Wizard } from "ui-lib";
+import { useMutation } from "react-apollo-hooks";
+import { LinearProgress } from "@material-ui/core";
+import { Wizard, Modal } from "ui-lib";
 import Page from "layouts/Page";
 import RegisterForm from "components/RegisterForm";
-import { OrgQuery, UserQuery, RegisterUserMutation } from "queries/users.gql";
+import { RegisterUserMutation } from "queries/users.gql";
 
-class Register extends Component {
-  constructor(props) {
-    super(props);
+function Register({ history }) {
+  const [alert, setAlert] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [orgName, setOrgName] = useState("");
+  const [agreeTOS, setAgreeTOS] = useState(false);
+  const changeHandler = {
+    email: setEmail,
+    password: setPassword,
+    firstName: setFirstName,
+    lastName: setLastName,
+    orgName: setOrgName,
+    agreeTOS: setAgreeTOS
+  };
+  const handleChange = field => e => changeHandler[field](e.target.value);
 
-    this.state = {
-      email: "",
-      password: "",
-      firstName: "",
-      lastName: "",
-      organization: "",
-      agreeTOS: false
-    };
-  }
+  const [registerUser, { mutationLoading, data, error }] = useMutation(
+    RegisterUserMutation,
+    {
+      variables: { email, firstName, lastName, orgName, password }
+    }
+  );
 
-  onSubmit = async () => {
-    const { email, firstName, lastName, orgName, password } = this.state;
-    const { client, history } = this.props;
-    this.setState({ loading: true });
-    try {
-      const {
-        error,
-        data: {
-          registerUser: { ok, token }
-        }
-      } = await client.mutate({
-        mutation: RegisterUserMutation,
-        variables: {
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          orgName: orgName,
-          password: password
-        }
+  useEffect(() => {
+    if (mutationLoading) {
+      setLoading(true);
+    }
+    if (error) {
+      setAlert({
+        type: "createError",
+        message: `There was an error creating your user: ${error}`
       });
-      if (!ok || error) {
-        console.log("the error is ", error);
-        this.setState({
-          loading: false,
-          alert: {
-            type: "createError",
-            message: `There was an error creating your user: ${error}`
-          }
+    }
+    if (!_.isEmpty(data)) {
+      const { ok, token } = data;
+      if (!ok) {
+        setAlert({
+          type: "createError",
+          message: `There was an error creating your user: ${error}`
         });
       } else {
         localStorage.setItem("token", token);
-        this.setState(
-          {
-            loading: false,
-            alert: {
-              type: "createSuccess",
-              message: "Successfully created your user. Welcome!"
-            }
-          },
-          () => {
-            history.push("/recipes");
+        setLoading(false);
+        setAlert({
+          alert: {
+            type: "createSuccess",
+            message: "Successfully created your user. Welcome!"
           }
-        );
+        });
       }
-    } catch (error) {
-      this.setState({
-        loading: false,
-        alert: {
-          type: "createError",
-          message: `There was an error creating registering your user: ${error}`
-        }
-      });
     }
+  });
+
+  const onComplete = async () => {
+    setLoading(true);
+    await registerUser();
+    history.push("/recipes");
   };
 
-  handleChange = e => {
-    e.preventDefault();
-    const {
-      target: { name, value }
-    } = e;
-
-    this.setState({
-      [name]: name === "agreeTOS" ? value === "yes" : value
-    });
-  };
-
-  render() {
-    const {
-      state: { email, password, firstName, lastName, organization, agreeTOS }
-    } = this;
-    console.log(this.props);
-    return (
-      <Fragment>
-        <Wizard
-          completeName="Get Started"
-          onComplete={this.onSubmit}
-          steps={[
-            {
-              name: "Register",
-              component: (
-                <RegisterForm
-                  handleChange={this.handleChange}
-                  email={email}
-                  password={password}
-                  firstName={firstName}
-                  lastName={lastName}
-                  organization={organization}
-                  agreeTOS={agreeTOS}
-                />
-              )
-            }
-          ]}
-        />
-      </Fragment>
-    );
+  if (!_.isEmpty(alert)) {
+    // we weren't handling alerts before so this will do for now.
+    return <Modal message={alert.message} handleClose={() => setAlert({})} />;
   }
+
+  if (loading) {
+    // todo: make prettier
+    return <LinearProgress />;
+  }
+
+  return (
+    <Wizard
+      completeName="Get Started"
+      onComplete={onComplete}
+      steps={[
+        {
+          name: "Register",
+          component: (
+            <RegisterForm
+              handleChange={handleChange}
+              email={email}
+              password={password}
+              firstName={firstName}
+              lastName={lastName}
+              orgName={orgName}
+              agreeTOS={agreeTOS}
+            />
+          )
+        }
+      ]}
+    />
+  );
 }
 
 Register.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
-  client: PropTypes.object.isRequired
+  history: PropTypes.object
 };
 
-export default Page(withApollo(Register));
+export default Page(Register);
