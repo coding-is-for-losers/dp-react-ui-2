@@ -6,12 +6,8 @@ import {
   Card,
   CardHeader,
   CardActions,
-  CardContent,
-  Collapse,
-  IconButton
+  CardContent
 } from "@material-ui/core";
-import clsx from "clsx";
-import { ExpandMore } from "@material-ui/icons";
 import ReactPlayer from "react-player";
 import CTAButton from "../CTAButton";
 import Theme from "../theme";
@@ -85,22 +81,25 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.grey[600],
     height: 60,
     width: 180
+  },
+  price: {
+    fontSize: 18,
+    padding: theme.spacing(1)
   }
 }));
 
 const RecipeIndex = ({
-  title,
-  price,
+  name,
+  pricePerMonth,
   authenticated,
-  links,
-  description,
-  details,
-  video
+  id,
+  descriptionLong
 }) => {
   const classes = useStyles(Theme);
-  const filteredLinks = links.filter(({ auth }) =>
-    authenticated ? auth : !auth
-  );
+  const video = "http://techslides.com/demos/samples/sample.mp4";
+  // const filteredLinks = links.filter(({ auth }) =>
+  //   authenticated ? auth : !auth
+  // );
   const [expanded, setExpanded] = React.useState(false);
 
   function handleExpandClick() {
@@ -113,40 +112,25 @@ const RecipeIndex = ({
           <CardHeader
             title={
               <Typography variant="h2" component="h2">
-                {title}
+                {name}
               </Typography>
             }
-            subheader={`$${price}`}
             className={classes.header}
           />
 
           <CardContent className={classes.content}>
             <Typography variant="body2" color="textSecondary" component="p">
-              {description}
+              {descriptionLong}
             </Typography>
           </CardContent>
           <CardActions className={classes.actions}>
-            {filteredLinks.map(({ name, link }, index) => (
-              <CTAButton
-                name={name}
-                link={link}
-                mini
-                color={index ? "primary" : null}
-                className={!index ? classes.grey : null}
-              />
-            ))}
-            {details ? (
-              <IconButton
-                className={clsx(classes.expand, {
-                  [classes.expandOpen]: expanded
-                })}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="Show more"
-              >
-                <ExpandMore />
-              </IconButton>
-            ) : null}
+            <CTAButton
+              name={"Get Started"}
+              link={`/sites/setup`}
+              color={"primary"}
+              mini
+            />
+            <p className={classes.price}>{`$${pricePerMonth}`}</p>
           </CardActions>
         </div>
         <ReactPlayer
@@ -159,13 +143,6 @@ const RecipeIndex = ({
           className={classes.player}
         />
       </div>
-      {details ? (
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>{details}</Typography>
-          </CardContent>
-        </Collapse>
-      ) : null}
     </Card>
   );
 };

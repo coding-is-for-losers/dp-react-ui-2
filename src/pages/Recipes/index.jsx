@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core";
+import { get, map } from "lodash";
 import { Hero, RecipeIndex, mainTheme } from "ui-lib";
 import { graphql } from "react-apollo";
 import { RecipesQuery } from "queries/recipes.gql";
@@ -26,16 +27,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RecipeIndexes = () => {
+const RecipeIndexes = props => {
   const classes = useStyles(mainTheme);
+  console.log("props", props);
+  const { data } = props;
+  const recipes = map(get(data, "recipes.edges", []), "node");
+  console.log(recipes);
   return (
     <Fragment>
       <Hero {...hero} />
       <div className={classes.cardContainer}>
-        <RecipeIndex {...recipeIndex} />
-        <RecipeIndex {...recipeIndex} />
-        <RecipeIndex {...recipeIndex} />
-        <RecipeIndex {...recipeIndex} />
+        {recipes.map(rProp => (
+          <RecipeIndex {...rProp} key={rProp.id} />
+        ))}
       </div>
     </Fragment>
   );

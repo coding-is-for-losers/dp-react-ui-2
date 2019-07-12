@@ -7,8 +7,8 @@ import Page from "layouts/Page";
 import AccountDetailsForm from "components/AccountDetailsForm";
 import BillingDetailsForm from "components/BillingDetailsForm";
 import InvoiceTable from "components/InvoiceTable";
+import { pricing } from "./copy";
 import stepperData from "DummyData/stepper";
-import pricingData from "DummyData/pricingCard";
 import invoiceData from "DummyData/invoice";
 
 const styles = theme => {
@@ -144,9 +144,9 @@ class Account extends Component {
                   name: "Pricing",
                   component: (
                     <div className={classes.cardContainer}>
-                      <PricingCard {...pricingData} />
-                      <PricingCard {...pricingData} />
-                      <PricingCard {...pricingData} />
+                      <PricingCard {...pricing.a} />
+                      <PricingCard {...pricing.b} />
+                      <PricingCard {...pricing.c} />
                     </div>
                   ),
                   flex: true

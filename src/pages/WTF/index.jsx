@@ -2,16 +2,13 @@ import React, { Fragment } from "react";
 import { Hero, Stepper, CTA } from "ui-lib";
 
 import Page from "layouts/Page";
-import HeroData from "DummyData/hero";
-import StepperData from "DummyData/stepper";
-import ctaData from "DummyData/cta";
-
+import { hero, stepper, cta } from "./copy";
 const Home = () => {
   return (
     <Fragment>
-      <Hero {...HeroData} />
-      <Stepper {...StepperData} />
-      <CTA {...ctaData} />
+      <Hero {...hero} />
+      <Stepper {...stepper} />
+      <CTA {...cta} />
     </Fragment>
   );
 };

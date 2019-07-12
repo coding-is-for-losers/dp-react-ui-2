@@ -38,42 +38,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RecipeIndex = ({ title, price, authenticated, links, description }) => {
+const RecipeIndex = props => {
+  console.log("in recipe ", props);
+  const { name, pricePerMonth, authenticated, id, descriptionLong } = props;
   const classes = useStyles(Theme);
-  const filteredLinks = links.filter(({ auth }) =>
-    authenticated ? auth : !auth
-  );
   return (
     <Card className={classes.card}>
       <CardHeader
-        title={title}
-        subheader={`$${price}`}
+        title={name}
+        subheader={`$${pricePerMonth}`}
         className={classes.header}
       />
       <CardContent className={classes.content}>
         <Typography variant="body2" color="textSecondary" component="p">
-          {description}
+          {descriptionLong}
         </Typography>
       </CardContent>
       <CardActions className={classes.actions}>
-        {filteredLinks.map(({ name, link }, index) => (
-          <CTAButton
-            name={name}
-            key={`${name} RI`}
-            link={link}
-            color={index ? "primary" : "grey"}
-            mini
-          />
-        ))}
+        <CTAButton
+          name={"Learn More"}
+          link={`/recipes/detail/${id}`}
+          color={"grey"}
+          mini
+        />
+        <CTAButton
+          name={"Get Started"}
+          link={`/sites/setup`}
+          color={"primary"}
+          mini
+        />
       </CardActions>
     </Card>
   );
 };
 
 RecipeIndex.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  descriptionLong: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  pricePerMonth: PropTypes.number.isRequired,
   authenticated: PropTypes.bool.isRequired,
   links: PropTypes.arrayOf(
     PropTypes.shape({

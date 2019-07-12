@@ -6,9 +6,9 @@ import { compareAsc, compareDesc } from "date-fns";
 import { withStyles } from "@material-ui/styles";
 import { Hero, DropDown, CTAButton } from "ui-lib";
 import Page from "layouts/Page";
-import HeroData from "DummyData/hero";
-import PaginatedTable from "components/PaginatedTable";
+import { hero } from "./copy";
 import sitesData from "DummyData/sitesData";
+import PaginatedTable from "components/PaginatedTable";
 
 const styles = theme => ({
   cardContainer: {
@@ -156,7 +156,7 @@ class SitesIndex extends Component {
     const filtered = this.filterSites(sites);
     return (
       <Fragment>
-        <Hero {...HeroData} classes={classes.none} />
+        <Hero {...hero} classes={classes.none} />
         <div className={classes.ddContainer}>
           <DropDown handleSelect={this.handleSelect} sets={sets} row />
           <div className={classes.addSiteButton}>

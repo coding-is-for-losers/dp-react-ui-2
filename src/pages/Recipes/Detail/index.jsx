@@ -2,6 +2,9 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import ReactRouterPropTypes from "react-router-prop-types";
 import { Redirect } from "react-router-dom";
+import { graphql } from "react-apollo";
+import { find, get, map } from "lodash";
+import { RecipesQuery } from "queries/recipes.gql";
 import { makeStyles } from "@material-ui/core";
 import { RecipeDetail, mainTheme, Stepper, SimpleTable } from "ui-lib";
 
@@ -26,17 +29,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RecipeDetails = ({ authenticated, match }) => {
+const RecipeDetails = ({ authenticated, match, data }) => {
   const classes = useStyles(mainTheme);
   const {
     params: { id }
   } = match;
-  if (id !== "1") {
-    return <Redirect to="/recipes" />;
-  }
+  const recipe = find(map(get(data, "recipes.edges", []), "node"), {
+    id
+  });
   return (
     <Fragment>
-      <RecipeDetail {...recipeDetailData} />
+      <RecipeDetail {...recipe} />
       <div className={classes.tableNavWrapper}>
         <aside className={classes.sideBarContainer}>
           <Stepper {...{ ...stepperData, detail: true }} />
@@ -55,4 +58,4 @@ RecipeDetails.propTypes = {
   match: ReactRouterPropTypes.match.isRequired
 };
 
-export default Page(RecipeDetails);
+export default Page(graphql(RecipesQuery)(RecipeDetails));

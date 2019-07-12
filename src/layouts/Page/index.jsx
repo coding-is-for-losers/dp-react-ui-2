@@ -38,7 +38,7 @@ export default (Component, options) => {
       <Box height={1} className={classes.box}>
         <UserConsumer>
           {user => {
-            return authenticated && isEmpty(user) ? (
+            return authenticated && isEmpty(user) && false ? (
               <Redirect to="/" />
             ) : (
               <Fragment>
