@@ -13,7 +13,7 @@ const RegisterForm = ({
   password,
   firstName,
   lastName,
-  organization,
+  orgName,
   agreeTOS
 }) => {
   return (
@@ -29,7 +29,7 @@ const RegisterForm = ({
         value={email}
         fullWidth
         autoComplete="email"
-        onChange={handleChange}
+        onChange={handleChange("email")}
       />
       <TextField
         required
@@ -39,7 +39,7 @@ const RegisterForm = ({
         value={firstName}
         fullWidth
         autoComplete="fname"
-        onChange={handleChange}
+        onChange={handleChange("firstName")}
       />
       <TextField
         required
@@ -49,17 +49,17 @@ const RegisterForm = ({
         value={lastName}
         fullWidth
         autoComplete="lname"
-        onChange={handleChange}
+        onChange={handleChange("lastName")}
       />
       <TextField
         required
-        id="organization"
-        name="organization"
+        id="orgName"
+        name="orgName"
         label="Organization"
-        value={organization}
+        value={orgName}
         fullWidth
-        autoComplete="organization"
-        onChange={handleChange}
+        autoComplete="orgName"
+        onChange={handleChange("orgName")}
       />
       <TextField
         id="password"
@@ -69,7 +69,7 @@ const RegisterForm = ({
         name="password"
         fullWidth
         value={password}
-        onChange={handleChange}
+        onChange={handleChange("password")}
         autoComplete="current-password"
       />
       <FormControlLabel
@@ -77,7 +77,7 @@ const RegisterForm = ({
           <Checkbox
             color="secondary"
             required
-            onChange={handleChange}
+            onChange={handleChange("agreeTOS")}
             name="agreeTOS"
             checked={agreeTOS}
             value="yes"
@@ -94,7 +94,7 @@ RegisterForm.propTypes = {
   email: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
-  organization: PropTypes.string.isRequired,
+  orgName: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   agreeTOS: PropTypes.bool.isRequired
 };
